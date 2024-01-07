@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shippoo306/Mysql.dart';
 import 'package:shippoo306/components.dart';
+import 'package:shippoo306/models/Sqldb.dart';
+import 'package:shippoo306/Screens/loginscreen.dart';
 
 class welcomescreen extends StatefulWidget {
   welcomescreen({super.key});
@@ -18,34 +19,17 @@ class _welcomescreenState extends State<welcomescreen>
   late Animation animation2;
   late Animation animation3;
 
-  var db = new Mysql();
-
-  late String text123='';
-
-  void _getName(){
-
-    db.getConnection().then((conn) {
-      String sql = 'select user from user where user = "root";';
-      conn.query(sql).then((results){
-        for(var row in results){
-          setState(() {
-            text123 = row[0];
-
-
-          });
+  Sqldb sqlDB = Sqldb();
+   var logo="";
 
 
 
-        }
-
-
-      });
-
-    });
 
 
 
-  }
+
+
+
   void initState() {
     super.initState();
     controller = AnimationController(
@@ -89,7 +73,7 @@ class _welcomescreenState extends State<welcomescreen>
                     Hero(
                       tag: 'logo',
                       child: Text(
-                        text123,
+                        logo,
                         style: GoogleFonts.poppins(
                             color: Color(0xffF5E65F),
                             textBaseline: TextBaseline.ideographic,
@@ -148,9 +132,7 @@ class _welcomescreenState extends State<welcomescreen>
                         animation2: animation2,
                         animation: animation,
                         onPressed: () {
-                          print("here is it1");
-                          _getName();
-                          // Navigator.pushNamed(context, 'login_screen');
+                          Navigator.pushNamed(context, 'loginscreen');
                         },
                         icon: Icons.arrow_forward,
                       ),
