@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shippoo306/Mysql.dart';
 import 'package:shippoo306/components.dart';
 
 class welcomescreen extends StatefulWidget {
-  const welcomescreen({super.key});
+  welcomescreen({super.key});
+
 
   @override
   State<welcomescreen> createState() => _welcomescreenState();
@@ -15,6 +17,35 @@ class _welcomescreenState extends State<welcomescreen>
   late Animation animation;
   late Animation animation2;
   late Animation animation3;
+
+  var db = new Mysql();
+
+  late String text123='';
+
+  void _getName(){
+
+    db.getConnection().then((conn) {
+      String sql = 'select user from user where user = "root";';
+      conn.query(sql).then((results){
+        for(var row in results){
+          setState(() {
+            text123 = row[0];
+
+
+          });
+
+
+
+        }
+
+
+      });
+
+    });
+
+
+
+  }
   void initState() {
     super.initState();
     controller = AnimationController(
@@ -58,7 +89,7 @@ class _welcomescreenState extends State<welcomescreen>
                     Hero(
                       tag: 'logo',
                       child: Text(
-                        'Shippo',
+                        text123,
                         style: GoogleFonts.poppins(
                             color: Color(0xffF5E65F),
                             textBaseline: TextBaseline.ideographic,
@@ -83,35 +114,46 @@ class _welcomescreenState extends State<welcomescreen>
               Expanded(
                 child: Column(
                   children: [
-                    Text(
-                      'Welcome to shippo!',
-                      style: GoogleFonts.poppins(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xffF2F55F)),
+                    Expanded(
+                      flex : 1,
+                      child: Text(
+                        'Welcome to shippo!',
+                        style: GoogleFonts.poppins(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xffF2F55F)),
+                      ),
                     ),
                     SizedBox(
                       height: 10,
                     ),
-                    Text(
-                      'Delivering Confidence Through Every Mile.',
-                      style: GoogleFonts.poppins(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                          color: Color(0xffc1c1c1)),
+                    Expanded(
+                      flex: 1,
+                      child: Text(
+                        'Delivering Confidence Through Every Mile.',
+                        style: GoogleFonts.poppins(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            color: Color(0xffc1c1c1)),
+                      ),
                     ),
                     SizedBox(
                       height: 10,
                     ),
-                    RoundedButton(
-                      title: 'Get Started',
-                      colour: Color(0xffF2F55F),
-                      animation2: animation2,
-                      animation: animation,
-                      onPressed: () {
-                        Navigator.pushNamed(context, 'login_screen');
-                      },
-                      icon: Icons.arrow_forward,
+                    Expanded(
+                      flex: 3,
+                      child: RoundedButton(
+                        title: 'Get Started',
+                        colour: Color(0xffF2F55F),
+                        animation2: animation2,
+                        animation: animation,
+                        onPressed: () {
+                          print("here is it1");
+                          _getName();
+                          // Navigator.pushNamed(context, 'login_screen');
+                        },
+                        icon: Icons.arrow_forward,
+                      ),
                     ),
                   ],
                 ),
