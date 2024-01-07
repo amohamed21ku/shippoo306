@@ -19,8 +19,7 @@ class _welcomescreenState extends State<welcomescreen>
   late Animation animation2;
   late Animation animation3;
 
-  Sqldb sqlDB = Sqldb();
-   var logo="";
+
 
 
 
@@ -73,7 +72,7 @@ class _welcomescreenState extends State<welcomescreen>
                     Hero(
                       tag: 'logo',
                       child: Text(
-                        logo,
+                        'Shippo',
                         style: GoogleFonts.poppins(
                             color: Color(0xffF5E65F),
                             textBaseline: TextBaseline.ideographic,
