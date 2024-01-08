@@ -10,6 +10,9 @@ class Sqldb{
       return _db;
     }
     else{
+      String databasepath = await getDatabasesPath();
+      String path = join(databasepath, 'shippo.db'); // databasepath/shippo.db
+      print(path);
       return _db;
     }
 
@@ -19,6 +22,7 @@ class Sqldb{
   intialDB() async{
     String databasepath = await getDatabasesPath();
     String path = join(databasepath, 'shippo.db'); // databasepath/shippo.db
+    print(path);
     Database mydb = await openDatabase(path, onCreate: _onCreate, version: 1 , onUpgrade: _onUpgrade);
     return mydb;
   }
@@ -32,93 +36,90 @@ class Sqldb{
   _onCreate(Database db , int version) async{
     await db.execute('''
     CREATE TABLE Employee (
-    EmployeeID INTEGER PRIMARY KEY,
-    FirstName TEXT,
-    LastName TEXT,
-    Position TEXT,
-    Email TEXT,
-    Phone TEXT
-);
-    ''');
-
-    await db.execute('''
-CREATE TABLE Vehicle (
-    VehicleID INT PRIMARY KEY,
-    LicensePlate TEXT,
-    Model TEXT,
-    Capacity INTEGER
+    EmployeeId INT AUTO_INCREMENT PRIMARY KEY,
+    Firstname VARCHAR(255),
+    Lastname VARCHAR(255),
+    Position VARCHAR(255),
+    Email VARCHAR(255),
+    Phone VARCHAR(20)
 );
     ''');
 
     await db.execute('''
 CREATE TABLE Customer (
-    CustomerID INTEGER PRIMARY KEY,
-    FirstName TEXT,
-    LastName TEXT,
-    Email TEXT,
-    Phone TEXT
+    CustomerID INT AUTO_INCREMENT PRIMARY KEY,
+    Firstname VARCHAR(255),
+    Lastname VARCHAR(255),
+    Phone VARCHAR(20)
+);
+
+    ''');
+
+    await db.execute('''
+CREATE TABLE Shipment (
+    ShipmentId INT AUTO_INCREMENT PRIMARY KEY,
+    SenderId INT REFERENCES Customer(CustomerID),
+    ReceiverId INT REFERENCES Customer(CustomerID),
+    DriverId INT,
+    VehicleId INT,
+    Status VARCHAR(50),
+    ShipmentDate DATE,
+    DeliveryDate DATE,
+    FOREIGN KEY (DriverId, VehicleId) REFERENCES Employee(EmployeeId, EmployeeId)
 );
     ''');
 
     await db.execute('''
-CREATE TABLE Location (
-    LocationID INTEGER PRIMARY KEY,
-    Name TEXT,
-    Address TEXT,
-    City TEXT,
-    CountryTEXT
+CREATE TABLE Vehicle (
+    VehicleId INT AUTO_INCREMENT PRIMARY KEY,
+    LicensePlate VARCHAR(20),
+    Model VARCHAR(255),
+    Capacity INT
 );
     ''');
     await db.execute('''
-CREATE TABLE Shipment (
-    ShipmentID INTEGER PRIMARY KEY,
-    EmployeeID INTEGER,
-    CustomerID INTEGER,
-    VehicleID INTEGER,
-    StartingLocationID INTEGER,
-    DestinationLocationID INTEGER,
-    Status TEXT,
-    ShipmentDate DATE,
-    DeliveryDate DATE,
-    FOREIGN KEY (EmployeeID) REFERENCES Employee(EmployeeID),
-    FOREIGN KEY (CustomerID) REFERENCES Customer(CustomerID),
-    FOREIGN KEY (VehicleID) REFERENCES Vehicle(VehicleID),
-    FOREIGN KEY (StartingLocationID) REFERENCES Location(LocationID),
-    FOREIGN KEY (DestinationLocationID) REFERENCES Location(LocationID)
+CREATE TABLE Address (
+    AddressId INT AUTO_INCREMENT PRIMARY KEY,
+    CustomerID INT REFERENCES Customer(CustomerID),
+    Name VARCHAR(255),
+    Address VARCHAR(255),
+    City VARCHAR(255),
+    Country VARCHAR(255),
+    ZipCode VARCHAR(20),
+    UNIQUE (AddressId, CustomerID)
 );
+
     ''');
     await db.execute('''
 CREATE TABLE Cargo (
-    CargoID INTEGER PRIMARY KEY,
-    ShipmentID INEGERT,
-    Description TEXT,
-    Weight REAL,
-    Type TEXT,
-    FOREIGN KEY (ShipmentID) REFERENCES Shipment(ShipmentID)
+    CargoId INT AUTO_INCREMENT PRIMARY KEY,
+    ShipmentId INT REFERENCES Shipment(ShipmentId),
+    Description VARCHAR(255),
+    Weight DECIMAL(10, 2),
+    Type VARCHAR(255)
 );
     ''');
 
 
     await db.execute('''
 CREATE TABLE User (
-    UserID INTEGER PRIMARY KEY,
-    Username TEXT,
-    Password TEXT,
-    FirstName TEXT,
-    LastName TEXT,
-    Type TEXT,
-    Phone TEXT
+    EmployeeId  INT,
+    Username VARCHAR(50),
+    Password VARCHAR(255),
+    PRIMARY KEY (Username, EmployeeId),
+    FOREIGN KEY (EmployeeId) REFERENCES Employee(EmployeeId)
 );
+
     ''');
     await db.execute('''
 
-    INSERT INTO User (UserID, Username, Password, FirstName, LastName, Type, Phone)
+    INSERT INTO User (EmployeeId , Username, Password)
     VALUES
-    (1, 'john_doe', 'password123', 'John', 'Doe', 'Admin', '555-1234'),
-    (2, 'jane_smith', 'pass456', 'Jane', 'Smith', 'User', '555-5678'),
-    (3, 'bob_johnson', 'secret', 'Bob', 'Johnson', 'User', '555-9012'),
-    (4, 'alice_jones', 'admin_pass', 'Alice', 'Jones', 'Admin', '555-3456'),
-    (5, 'charlie_brown', 'user_pass', 'Charlie', 'Brown', 'User', '555-7890');
+    (1, 'john_doe', 'password123'),
+    (2, 'jane_smith', 'pass456'),
+    (3, 'bob_johnson', 'secret'),
+    (4, 'alice_jones', 'admin_pass'),
+    (5, 'charlie_brown', 'user_pass');
 
     ''');
 
