@@ -171,6 +171,40 @@ class RoundedButton_withicon extends StatelessWidget {
 }
 
 // ----------------------=======================-----------------------
+class myiconbutton extends StatelessWidget {
+  final IconData icon;
+  final String title;
+ final VoidCallback onPressed;
+  final Color color;
+   const  myiconbutton(
+      {required this.icon,
+        required this.title,
+         required this.onPressed,
+        required this.color
+        });
 
 
-// =================================44
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        IconButton(
+          icon: Icon(
+            icon,
+            color: color,
+          ),
+          onPressed: onPressed,
+        ),
+        Text(
+          '$title',
+          style: GoogleFonts.poppins(fontSize: 14),
+        )
+      ],
+    );
+  }
+}
+
+
+// =================================
+
+

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:shippoo306/Screens/homescreen.dart';
+import 'package:shippoo306/Screens/newformscreen.dart';
 import 'package:shippoo306/Screens/welcomescreen.dart';
 import 'package:shippoo306/Screens/loginscreen.dart';
 import 'package:shippoo306/Screens/signupscreen.dart';
@@ -23,8 +25,8 @@ class MyApp extends StatelessWidget {
         "welcomescreen": (context) => welcomescreen(),
         "loginscreen": (context) => loginscreen(),
         "signupscreen": (context) => signupscreen(),
-        // "homescreen": (context) =>homescreen(),
-        // "newform_screen": (context) => newformscreen(),
+        "homescreen": (context) =>homescreen(),
+        "newformscreen": (context) => newformscreen(),
         // "info_screen": (context) => infoscreen(),
         // "profilepage": (context) => ProfilePage()
       },
