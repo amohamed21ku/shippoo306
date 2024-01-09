@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:shippoo306/components.dart';
 import 'package:shippoo306/Screens/homecontent.dart';
 import 'package:shippoo306/Screens/newformscreen.dart';
+import 'package:shippoo306/models/Showingdata.dart';
 import 'package:shippoo306/widgets/infolist.dart';
 
 
@@ -87,11 +88,7 @@ class _homescreenState extends State<homescreen>
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(20),
                       topRight: Radius.circular(30))),
-              child: InfoList(
-                info: [
-
-                ],
-              ),
+              child: ShowingData(),
             ),
           )
         ],
@@ -114,7 +111,7 @@ class _homescreenState extends State<homescreen>
               builder: build_bottomsheet);
         },
         backgroundColor: Color(0xffF5E65F),
-        child: Icon(Icons.add,color: Colors.white,size: 30,),
+        child: Icon(Icons.add,color: Colors.black,size: 30,),
 
         //icon inside button
       ),

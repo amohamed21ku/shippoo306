@@ -50,7 +50,7 @@ class menuscreen extends StatelessWidget {
                   SizedBox(height: 20,),
                   Row(
                   children: [
-                    Expanded(child: RoundedButtonSmall(colour: Colors.yellow, title: 'Orders', onPressed: () {       Navigator.pushNamed(context, 'homescreen');
+                    Expanded(child: RoundedButtonSmall(colour: Colors.yellow, title: 'Orders', onPressed: () {Navigator.pushNamed(context, 'homescreen');
                     }, width: 10, height: 100,icon: Icons.local_shipping, iconColor: Colors.grey, textcolor: Colors.black,)),
                     SizedBox(width: 10,),
                     Expanded(child: RoundedButtonSmall(colour: Colors.yellow, title: 'Customers', onPressed: () {  }, width: 10, height: 100,icon: Icons.person, iconColor: Colors.grey, textcolor: Colors.black,)),
@@ -73,9 +73,8 @@ class menuscreen extends StatelessWidget {
 Expanded(
   child: Column(
     children: [
-      RoundedButtonSmall(colour: Colors.yellow, title: 'New Customer', onPressed: () {  }, width: 0, height: 50,icon: Icons.person_add_alt, iconColor: Colors.grey, textcolor: Colors.black,),
-      RoundedButtonSmall(colour: Colors.yellow, title: 'New Order', onPressed: () {  }, width: 0, height: 50,icon: Icons.add, iconColor: Colors.grey, textcolor: Colors.black,),
-      RoundedButtonSmall(colour: Colors.yellow, title: 'New Customer', onPressed: () {  }, width: 0, height: 50,icon: Icons.person_add_alt, iconColor: Colors.grey, textcolor: Colors.black,),
+      RoundedButtonSmall(colour: Colors.yellow, title: 'Track Order', onPressed: () {  }, width: 0, height: 50,icon: Icons.add_box, iconColor: Colors.grey, textcolor: Colors.black,),
+
 
 
 
