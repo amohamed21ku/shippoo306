@@ -4,6 +4,9 @@ import 'package:shippoo306/Screens/newformscreen.dart';
 import 'package:shippoo306/Screens/welcomescreen.dart';
 import 'package:shippoo306/Screens/loginscreen.dart';
 import 'package:shippoo306/Screens/signupscreen.dart';
+import 'package:shippoo306/Screens/employeescreen.dart';
+
+import 'Screens/menuscreen.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -27,8 +30,8 @@ class MyApp extends StatelessWidget {
         "signupscreen": (context) => signupscreen(),
         "homescreen": (context) =>homescreen(),
         "newformscreen": (context) => newformscreen(),
-        // "info_screen": (context) => infoscreen(),
-        // "profilepage": (context) => ProfilePage()
+        "menuscreen": (context) => menuscreen(),
+        "employeescreen": (context) => employeescreen()
       },
       home: welcomescreen(),
     );

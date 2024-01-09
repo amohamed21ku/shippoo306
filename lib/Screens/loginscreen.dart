@@ -5,6 +5,7 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:shippoo306/components.dart';
 import 'package:shippoo306/constants.dart';
 import 'package:shippoo306/models/Sqldb.dart';
+import 'package:shippoo306/models/User.dart';
 
 class loginscreen extends StatefulWidget {
   loginscreen({super.key});
@@ -155,20 +156,40 @@ class _loginscreenState extends State<loginscreen>
                                   final user = username;
 
                                   List<Map> response = await sqlDB.readData('''
-                                 select username, password  from user;
+                                   SELECT User.Username, User.Password, Employee.* FROM User JOIN Employee ON User.UserId = Employee.EmployeeId WHERE Username = '$username' and Password = '$pass';
                                  ''');
-                                   bool found = false ;
-                                  for (var i = 0; i < response.length; i++) {
-                                    print('before: $user');
-                                    print('before: ${response[i]['Username']}');
-                                    if (user == response[i]['Username'] && pass == response[i]['Password']) {
-                                      print('after: $user');
-                                      print('after: ${response[i]['Username']}');
-                                      found = true;
-                                      Navigator.pushNamed(context, "homescreen");
+                                  List<Map> response2 = await sqlDB.readData('''
+                                 SELECT *  FROM Employee ;
+                                 ''');
 
+                                  List<Map> response3 = await sqlDB.readData('''
+                                 SELECT *  FROM User ;
+                                 ''');
+                                  print('omk omk omk omk omk omk $response');
+                                  print('omk omk omk omk omk omk $response2');
+                                  print('omk omk omk omk omk omk $response3');
+
+
+                                   bool found = false ;
+                                   print('length: abdo ${response.length}');
+                                    if (response.length == 1 ) {
+                                      found = true;
+                                      print(response[0]['EmployeeId']);
+                                      print(response[0]['Firstname']);
+                                      print(response[0]['Lastname']);
+                                      print(response[0]['Position']);
+                                      print(response[0]['Email']);
+                                      print(response[0]['Phone']);
+                                      User.currentuser = User(EmployeeId: response[0]['EmployeeId'], Email: response[0]['Email'], Firstname: response[0]['Firstname'], Lastname: response[0]['Lastname'], Position: response[0]['Position'], Phone: response[0]['Phone']);
+                                      Navigator.pushNamed(
+                                        context,
+                                        'menuscreen',
+                                        arguments: <String, String>{
+                                          'name': 'not me',
+                                        },
+                                      );
                                     }
-                                  }
+
                                   if(found == false){throw Error();}
                                 } catch (e) {
                                   if (username == '' || pass == '') {

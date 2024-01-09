@@ -207,4 +207,61 @@ class myiconbutton extends StatelessWidget {
 
 // =================================
 
+class RoundedButtonSmall extends StatelessWidget {
+  const RoundedButtonSmall({
+    required this.colour,
+    required this.title,
+    required this.onPressed,
+    required this.width,
+    required this.height,
+    required this.icon,
+    required this.iconColor,
+    required this.textcolor
+
+  });
+
+  final Color colour;
+  final String title;
+  final VoidCallback onPressed;
+  final double width;
+  final double height;
+  final IconData icon;
+  final Color iconColor;
+  final Color textcolor;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 16.0),
+      child: Material(
+        elevation: 5.0,
+        color: colour,
+        borderRadius: BorderRadius.circular(20.0),
+        child: MaterialButton(
+          onPressed: onPressed,
+          minWidth: width,
+          height: height,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(icon,color: iconColor,),
+              SizedBox(width: 10,),
+              Text(
+                title,
+                style: GoogleFonts.poppins(
+                    color: textcolor,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600),
+              ),
+              SizedBox(
+                width: 7,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 

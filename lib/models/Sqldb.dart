@@ -36,7 +36,7 @@ class Sqldb{
   _onCreate(Database db , int version) async{
     await db.execute('''
     CREATE TABLE Employee (
-    EmployeeId INT AUTO_INCREMENT PRIMARY KEY,
+    EmployeeId INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     Firstname VARCHAR(255),
     Lastname VARCHAR(255),
     Position VARCHAR(255),
@@ -47,21 +47,20 @@ class Sqldb{
 
     await db.execute('''
 CREATE TABLE Customer (
-    CustomerID INT AUTO_INCREMENT PRIMARY KEY,
+    CustomerID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     Firstname VARCHAR(255),
     Lastname VARCHAR(255),
     Phone VARCHAR(20)
 );
-
     ''');
 
     await db.execute('''
 CREATE TABLE Shipment (
-    ShipmentId INT AUTO_INCREMENT PRIMARY KEY,
-    SenderId INT REFERENCES Customer(CustomerID),
-    ReceiverId INT REFERENCES Customer(CustomerID),
-    DriverId INT,
-    VehicleId INT,
+    ShipmentId INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    SenderId INTEGER REFERENCES Customer(CustomerID),
+    ReceiverId INTEGER REFERENCES Customer(CustomerID),
+    DriverId INTEGER,
+    VehicleId INTEGER,
     Status VARCHAR(50),
     ShipmentDate DATE,
     DeliveryDate DATE,
@@ -71,16 +70,16 @@ CREATE TABLE Shipment (
 
     await db.execute('''
 CREATE TABLE Vehicle (
-    VehicleId INT AUTO_INCREMENT PRIMARY KEY,
+    VehicleId INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     LicensePlate VARCHAR(20),
     Model VARCHAR(255),
-    Capacity INT
+    Capacity INTEGER
 );
     ''');
     await db.execute('''
 CREATE TABLE Address (
-    AddressId INT AUTO_INCREMENT PRIMARY KEY,
-    CustomerID INT REFERENCES Customer(CustomerID),
+    AddressId INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    CustomerID INTEGER REFERENCES Customer(CustomerID),
     Name VARCHAR(255),
     Address VARCHAR(255),
     City VARCHAR(255),
@@ -92,8 +91,8 @@ CREATE TABLE Address (
     ''');
     await db.execute('''
 CREATE TABLE Cargo (
-    CargoId INT AUTO_INCREMENT PRIMARY KEY,
-    ShipmentId INT REFERENCES Shipment(ShipmentId),
+    CargoId INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    ShipmentId INTEGER REFERENCES Shipment(ShipmentId),
     Description VARCHAR(255),
     Weight DECIMAL(10, 2),
     Type VARCHAR(255)
@@ -103,14 +102,22 @@ CREATE TABLE Cargo (
 
     await db.execute('''
 CREATE TABLE User (
-    EmployeeId  INT,
+    UserId INTEGER PRIMARY KEY AUTOINCREMENT,
     Username VARCHAR(50),
     Password VARCHAR(255),
-    PRIMARY KEY (Username, EmployeeId),
-    FOREIGN KEY (EmployeeId) REFERENCES Employee(EmployeeId)
 );
 
     ''');
+    await db.execute('''
+    INSERT INTO Employee ( Firstname, Lastname, Position, Email, Phone)
+VALUES
+('John', 'Doe', 'Manager', 'john.doe@example.com', '123-456-7890'),
+( 'Jane', 'Smith', 'Developer', 'jane.smith@example.com', '987-654-3210'),
+( 'Bob', 'Johnson', 'Designer', 'bob.johnson@example.com', '456-789-0123'),
+( 'Alice', 'Jones', 'Admin', 'alice.jones@example.com', '789-012-3456'),
+( 'Charlie', 'Brown', 'User', 'charlie.brown@example.com', '012-345-6789');
+
+''');
     await db.execute('''
 
     INSERT INTO User (EmployeeId , Username, Password)
@@ -120,7 +127,6 @@ CREATE TABLE User (
     (3, 'bob_johnson', 'secret'),
     (4, 'alice_jones', 'admin_pass'),
     (5, 'charlie_brown', 'user_pass');
-
     ''');
 
 

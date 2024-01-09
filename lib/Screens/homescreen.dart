@@ -3,9 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:shippoo306/components.dart';
 import 'package:shippoo306/Screens/homecontent.dart';
 import 'package:shippoo306/Screens/newformscreen.dart';
-import 'package:shippoo306/components.dart';
 import 'package:shippoo306/widgets/infolist.dart';
-import 'package:shippoo306/widgets/infocard.dart';
 
 
 class homescreen extends StatefulWidget {

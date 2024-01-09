@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shippoo306/components.dart';
@@ -132,6 +133,24 @@ class signupscreen extends StatelessWidget {
                         obscureText: false,
                         onChanged: (value) {
                           //Do something with the user input.
+                          Phone = value;
+                        },
+                        decoration: kTextfielDecoration.copyWith(
+                            hintText: "Phone Number",
+                            prefixIcon: Icon(
+                              Icons.phone,
+                              color: Colors.grey,
+                            )
+                        ),
+                      ),
+                      SizedBox(
+                        height: 15.0,
+                      ),
+                      TextField(
+                        style: GoogleFonts.poppins(color: Colors.black),
+                        obscureText: false,
+                        onChanged: (value) {
+                          //Do something with the user input.
                           Email = value;
                         },
                         decoration: kTextfielDecoration.copyWith(
@@ -216,7 +235,7 @@ class signupscreen extends StatelessWidget {
                                  select username, password from user;
                                  ''');
 
-    if (Firstname == '' || Lastname == '' || Position == '' || Email == '' || Username == '' || password
+    if (Firstname == '' || Lastname == '' || Position == '' || Phone == '' || Email == '' || Username == '' || password
      == '' || verifyPassword == '') {
     ArtSweetAlert.show(
     context: context,
@@ -242,8 +261,10 @@ class signupscreen extends StatelessWidget {
       }
       Navigator.pushNamed(context, 'loginscreen');
       sqlDB.insertData('''
-      INSERT INTO Employee (Firstname, Lastname, Position, Email, Phone)
-VALUES ('$Firstname', '$Lastname', '$Position', '$Email', '$Phone');''');
+      INSERT INTO Employee (Firstname, Lastname,Position, Phone, Email )
+VALUES ('$Firstname', '$Lastname', '$Position', '$Phone' , '$Email' );''');
+
+
 
     sqlDB.insertData('''
       INSERT INTO User (Username, Password)
@@ -259,7 +280,6 @@ VALUES ('$Username', '$password');''');
                 "Username already Signed"));
       }
     }
-
                                 },
                                 icon: Icon(
                                   Icons.arrow_forward,
