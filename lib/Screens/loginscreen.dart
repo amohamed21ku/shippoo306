@@ -5,7 +5,6 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:shippoo306/components.dart';
 import 'package:shippoo306/constants.dart';
 import 'package:shippoo306/models/Sqldb.dart';
-import 'package:shippoo306/models/User.dart';
 
 class loginscreen extends StatefulWidget {
   loginscreen({super.key});
