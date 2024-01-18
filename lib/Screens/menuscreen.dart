@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shippoo306/Screens/homescreen.dart';
 import 'package:shippoo306/components.dart';
 
 import '../models/User.dart';
 
 class menuscreen extends StatelessWidget {
 
+  static const routeName = 'menuscreen';
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       body: CustomScrollView(
         slivers: [
@@ -50,10 +53,15 @@ class menuscreen extends StatelessWidget {
                   SizedBox(height: 20,),
                   Row(
                   children: [
-                    Expanded(child: RoundedButtonSmall(colour: Colors.yellow, title: 'Orders', onPressed: () {Navigator.pushNamed(context, 'homescreen');
+                    Expanded(child: RoundedButtonSmall(colour: Colors.yellow, title: 'Orders', onPressed: () {  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => homescreen(),
+                      ),
+                    );
                     }, width: 10, height: 100,icon: Icons.local_shipping, iconColor: Colors.grey, textcolor: Colors.black,)),
                     SizedBox(width: 10,),
-                    Expanded(child: RoundedButtonSmall(colour: Colors.yellow, title: 'Customers', onPressed: () {  }, width: 10, height: 100,icon: Icons.person, iconColor: Colors.grey, textcolor: Colors.black,)),
+                    Expanded(child: RoundedButtonSmall(colour: Colors.yellow, title: 'Customers', onPressed: () { Navigator.pushNamed(context, 'customerscreen'); }, width: 10, height: 100,icon: Icons.person, iconColor: Colors.grey, textcolor: Colors.black,)),
                   ],
                 ),
                   SizedBox(height: 10,),
@@ -61,7 +69,7 @@ class menuscreen extends StatelessWidget {
                     children: [
                       Expanded(child: RoundedButtonSmall(colour: Colors.yellow, title: 'Employees', onPressed: () { Navigator.pushNamed(context, 'employeescreen' );}, width: 10, height: 100,icon: Icons.work, iconColor: Colors.grey, textcolor: Colors.black,)),
                       SizedBox(width: 10,),
-                      Expanded(child: RoundedButtonSmall(colour: Colors.yellow, title: 'Drivers', onPressed: () {  }, width: 0, height: 100,icon: Icons.drive_eta, iconColor: Colors.grey, textcolor: Colors.black,)),
+                      Expanded(child: RoundedButtonSmall(colour: Colors.yellow, title: 'Drivers', onPressed: () {  Navigator.pushNamed(context, 'driverscreen'); }, width: 0, height: 100,icon: Icons.drive_eta, iconColor: Colors.grey, textcolor: Colors.black,)),
                 
                     ],
                   ),
@@ -73,7 +81,7 @@ class menuscreen extends StatelessWidget {
 Expanded(
   child: Column(
     children: [
-      RoundedButtonSmall(colour: Colors.yellow, title: 'Track Order', onPressed: () {  }, width: 0, height: 50,icon: Icons.add_box, iconColor: Colors.grey, textcolor: Colors.black,),
+      RoundedButtonSmall(colour: Colors.yellow, title: 'Track Order', onPressed: () { Navigator.pushNamed(context, 'ordertrackingpage'); }, width: 0, height: 50,icon: Icons.add_box, iconColor: Colors.grey, textcolor: Colors.black,),
 
 
 

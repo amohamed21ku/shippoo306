@@ -2,20 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class infoCard extends StatelessWidget {
-  var onpress;
+  VoidCallback onpress;
   String name;
   IconData icon;
   String Date;
   late var Prof_icon;
+  String intial;
 
   infoCard({
     this.icon = Icons.person,
     required this.name,
     required this.Date,
     required this.onpress,
+    required this.intial,
 
-    // required this.checkboxCallback,
-    // this.longPressCallback
+
   });
   @override
   Widget build(BuildContext context) {
@@ -23,16 +24,14 @@ class infoCard extends StatelessWidget {
       Prof_icon = Icon(Icons.person);
     } else {
       Prof_icon = Text(
-        '${this.name[0]}',
+        '$intial',
         style: GoogleFonts.poppins(
             color: Colors.black, fontSize: 16, fontWeight: FontWeight.w600),
       );
     }
 
     return GestureDetector(
-      onTap: () {
-        Navigator.pushNamed(context, 'info_screen');
-      },
+      onTap:onpress,
       child: Container(
         padding: EdgeInsets.all(10),
         margin: EdgeInsets.only(bottom: 5),

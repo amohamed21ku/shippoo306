@@ -3,7 +3,18 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:shippoo306/components.dart';
 
 class newformscreen extends StatelessWidget {
-  const newformscreen({super.key});
+   newformscreen({super.key});
+
+  int SenderId = 0;
+  int RecieverId = 0;
+  String SenderLoc ='';
+  String RecieverLoc ='';
+  int DriverId = 0;
+  int VechicleId=0;
+  String ShipmentDate = '';
+  String DeliveryDate = '';
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -49,21 +60,15 @@ class newformscreen extends StatelessWidget {
               ),
               Row(
                 children: [
-                  Expanded(child: MY_textField(hint_text: "Name")),
+                  Expanded(child: MY_textField(hint_text: "Customer ID", onchange: (value){
+                    SenderId = value;
+                  }, h: 40,)),
                   SizedBox(width: 20),
-                  Expanded(child: MY_textField(hint_text: "Surname")),
+                  // Expanded(child: MY_textField(hint_text: "Date", onchange: null,)),
                 ],
               ),
-              SizedBox(
-                height: 18,
-              ),
-              Row(
-                children: [
-                  Expanded(child: MY_textField(hint_text: "Email")),
-                  SizedBox(width: 20),
-                  Expanded(child: MY_textField(hint_text: "phone Number")),
-                ],
-              ),
+
+
               SizedBox(
                 height: 10,
               ),
@@ -77,9 +82,9 @@ class newformscreen extends StatelessWidget {
               SizedBox(
                 height: 10,
               ),
-              MY_textField(hint_text: ''),
+              MY_textField(hint_text: '', onchange: null, h: 100,),
               SizedBox(
-                height: 45,
+                height: 25,
               ),
               Text(
                 'Send To',
@@ -89,25 +94,21 @@ class newformscreen extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: 12,
+                height: 10,
               ),
               Row(
                 children: [
-                  Expanded(child: MY_textField(hint_text: "Name")),
-                  SizedBox(width: 20),
-                  Expanded(child: MY_textField(hint_text: "Surname")),
+                  Expanded(child: MY_textField(hint_text: "Customer Id", onchange: null, h: 40,)),
                 ],
               ),
-              SizedBox(
-                height: 18,
-              ),
-              Row(
-                children: [
-                  Expanded(child: MY_textField(hint_text: "Email")),
-                  SizedBox(width: 20),
-                  Expanded(child: MY_textField(hint_text: "Phone Number")),
-                ],
-              ),
+
+              // Row(
+              //   children: [
+              //     Expanded(child: MY_textField(hint_text: "Email", onchange: null,)),
+              //     SizedBox(width: 20),
+              //     Expanded(child: MY_textField(hint_text: "Phone Number", onchange: null,)),
+              //   ],
+              // ),
               SizedBox(
                 height: 10,
               ),
@@ -121,12 +122,30 @@ class newformscreen extends StatelessWidget {
               SizedBox(
                 height: 10,
               ),
-              MY_textField(hint_text: ""),
+
+              MY_textField(hint_text: "", onchange: null, h: 100,),
+              SizedBox(height: 25,),
+              Column(
+                children: [
+                  Row(children: [
+                    Expanded(child: MY_textField(hint_text: "Driver Id", onchange: null, h: 40,)),
+                    SizedBox(width: 20,),
+                    Expanded(child: MY_textField(hint_text: "Vechicle Id", onchange: null, h: 40,)),
+                  ],),
+                  SizedBox(height: 15,),
+                  Row(children: [
+                    Expanded(child: MY_textField(hint_text: "Shipment Date", onchange: null, h: 40,)),
+                    SizedBox(width: 20,),
+                    Expanded(child: MY_textField(hint_text: "Delivery Date", onchange: null, h: 40,)),
+                  ],)
+                ],
+              ),
               RoundedButton2(
                 colour: Colors.yellow,
                 title: "Sumbit",
                 onPressed: () {
                   Navigator.pop(context);
+                  Navigator.popAndPushNamed(context, 'homescreen');
                 },
               )
             ],

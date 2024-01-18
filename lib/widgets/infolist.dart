@@ -12,8 +12,9 @@ class InfoList extends StatelessWidget {
         return infoCard(
           name: info[index].name,
           Date: info[index].Date,
-          onpress: null,
+          onpress: info[index].onpress,
           icon: info[index].icon,
+          intial: info[index].intial,
         );
       },
       itemCount: info.length,

@@ -1,32 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-// import 'package:shippoo/Provider/info_provider.dart';
-import 'package:shippoo306/components.dart';
-// import 'package:shippoo306/widgets/InfoList.dart';
+
 
 class ButtonRow extends StatefulWidget {
+  int index;
+  ButtonRow({this.index =0});
   @override
-  _ButtonRowState createState() => _ButtonRowState();
+  _ButtonRowState createState() => _ButtonRowState(activeButtonIndex: index);
+
 }
 
 class _ButtonRowState extends State<ButtonRow> {
-  int activeButtonIndex = 0;
+   int activeButtonIndex;
+  _ButtonRowState({required this.activeButtonIndex});
 
-  void _handleButtonTap(int index) {
+
+  void handleButtonTap(int index) {
     setState(() {
       activeButtonIndex = index;
     });
+    late String chosen_screen;
+    if(activeButtonIndex == 0){chosen_screen = 'homescreen';}
+    else if(activeButtonIndex ==1){chosen_screen = 'InprocessScreen';}
+    else if (activeButtonIndex ==2 ){chosen_screen = 'deliveredscreen';}
+    else if (activeButtonIndex ==3) {chosen_screen = 'canceledscreen';}
 
-    // Navigate to the DetailsScreen and pass data based on the button index.
-    Navigator.pushNamed(
-      context,
-      '/details',
-      arguments: activeButtonIndex,
-    );
+
+    Navigator.popAndPushNamed(context, chosen_screen);
+
+
   }
 
   List<String> buttonLabels = [
-    "New Order",
+    "All Orders",
     "In Process",
     "Delivered",
     "Canceled"
@@ -38,7 +44,7 @@ class _ButtonRowState extends State<ButtonRow> {
     for (int i = 0; i < 4; i++) {
       buttons.add(
         TextButton(
-          onPressed: () => _handleButtonTap(i),
+          onPressed: () => handleButtonTap(i),
           child: Expanded(
             child: Row(
               children: [

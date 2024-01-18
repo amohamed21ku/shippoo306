@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:shippoo306/Screens/CanceledScreen.dart';
+import 'package:shippoo306/Screens/CustomerScreen.dart';
+import 'package:shippoo306/Screens/DeliveredScreen.dart';
+import 'package:shippoo306/Screens/Driverscreen.dart';
+import 'package:shippoo306/Screens/InprocessScreen.dart';
+import 'package:shippoo306/Screens/OrderTrackingPage.dart';
 import 'package:shippoo306/Screens/homescreen.dart';
 import 'package:shippoo306/Screens/newformscreen.dart';
 import 'package:shippoo306/Screens/welcomescreen.dart';
 import 'package:shippoo306/Screens/loginscreen.dart';
 import 'package:shippoo306/Screens/signupscreen.dart';
 import 'package:shippoo306/Screens/employeescreen.dart';
+import 'Screens/EmployeeInfoPage.dart';
 import 'Screens/addingEmployeeScreen.dart';
 import 'Screens/menuscreen.dart';
 void main() {
@@ -32,7 +39,14 @@ class MyApp extends StatelessWidget {
         "newformscreen": (context) => newformscreen(),
         "menuscreen": (context) => menuscreen(),
         "employeescreen": (context) => employeescreen(),
-        "addingEmployee": (context) => addingEmployee()
+        "addingEmployee": (context) => addingEmployee(),
+        "driverscreen": (context) => Driverscreen(),
+        "customerscreen": (context) => CustomerScreen(),
+        "ordertrackingpage": (context) => OrderTrackingPage(),
+        "InprocessScreen": (context) => InprocessScreen(),
+        "deliveredscreen": (context) => DeliveredScreen(),
+        "canceledscreen": (context) => CanceledScreen(),
+
       },
       home: welcomescreen(),
     );

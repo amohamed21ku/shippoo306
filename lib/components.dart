@@ -57,17 +57,19 @@ class RoundedButton extends StatelessWidget {
 
 class MY_textField extends StatelessWidget {
   final String hint_text;
-
-  MY_textField({required this.hint_text});
+   var onchange;
+   final double h;
+  MY_textField({required this.hint_text , required this.onchange, required this.h});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 40,
+      height: h,
       decoration: BoxDecoration(
           color: Color(0xff4E4B4A), borderRadius: BorderRadius.circular(10)),
       child: TextField(
+        onChanged: onchange,
         decoration:
         InputDecoration(border: InputBorder.none, hintText: '$hint_text'),
         textAlign: TextAlign.center,

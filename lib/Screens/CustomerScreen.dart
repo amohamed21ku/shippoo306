@@ -7,16 +7,16 @@ import 'package:shippoo306/models/Showingdata.dart';
 import '../models/Sqldb.dart';
 
 
-class employeescreen extends StatefulWidget {
-  const employeescreen({super.key});
+class CustomerScreen extends StatefulWidget {
+  const CustomerScreen({super.key});
 
   @override
-  State<employeescreen> createState() => _employeescreenState();
+  State<CustomerScreen> createState() => _CustomerScreenState();
 }
 
-class _employeescreenState extends State<employeescreen>
-     {
-       Sqldb sqlDB = Sqldb();
+class _CustomerScreenState extends State<CustomerScreen>
+{
+  Sqldb sqlDB = Sqldb();
 
 
 
@@ -51,7 +51,7 @@ class _employeescreenState extends State<employeescreen>
               child: Column(
                 children: [
                   Text(
-                      'Employees',
+                      'Customers',
                       style: GoogleFonts.poppins(
                           fontSize: 16.0,
                           fontWeight: FontWeight.w600
@@ -64,23 +64,23 @@ class _employeescreenState extends State<employeescreen>
             ),
             Expanded(
               child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 10),
-                decoration: BoxDecoration(
-                    color: Colors.white10,
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(20),
-                        topRight: Radius.circular(30))),
-                child:ShowingData( sql: 'SELECT * FROM employee join User on UserId = EmployeeId;')
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  decoration: BoxDecoration(
+                      color: Colors.white10,
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(30))),
+                  child:ShowingData( sql: 'SELECT * FROM Customer')
               ),
             )
           ],
         ),
-      
-      
-      
-      
-      
-      
+
+
+
+
+
+
       ),
     );
   }

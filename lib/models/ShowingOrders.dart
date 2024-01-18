@@ -4,9 +4,9 @@ import 'package:shippoo306/widgets/infocard.dart';
 import '../Screens/EmployeeInfoPage.dart';
 import '../models/Sqldb.dart';
 
-class ShowingData extends StatelessWidget {
+class ShowingOrders extends StatelessWidget {
   final String sql;
-  ShowingData({required this.sql});
+  ShowingOrders({required this.sql});
   final Sqldb sqlDB = Sqldb();
 
 
@@ -28,8 +28,8 @@ class ShowingData extends StatelessWidget {
           for (var emp in snapshot.data!) {
             employeeCards.add(
               infoCard(
-                name: '${emp['Firstname']} ${emp['Lastname']}',
-                Date: 'Employee ID: ${emp['EmployeeId']}',
+                name: 'From: ${emp['SenderFirstname']} ${emp['SenderLastname']}',
+                Date: 'To: ${emp['ReceiverFirstname']} ${emp['ReceiverLastname']}',
                 onpress: () {
                   Navigator.push(
                     context,
@@ -37,7 +37,7 @@ class ShowingData extends StatelessWidget {
                       builder: (context) => EmployeeInfoPage(employeeDetails: emp),
                     ),
                   );
-                }, intial: '${emp['Firstname'][0]}',
+                },  intial: '${emp['SenderFirstname'][0]}',
 
               ),
             );

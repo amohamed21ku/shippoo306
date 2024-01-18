@@ -8,14 +8,14 @@ import '../models/Details.dart';
 
 
 
-class homescreen extends StatefulWidget {
-
+class DeliveredScreen extends StatefulWidget {
+  const DeliveredScreen({super.key});
 
   @override
-  State<homescreen> createState() => _homescreenState();
+  State<DeliveredScreen> createState() => _DeliveredScreenState();
 }
 
-class _homescreenState extends State<homescreen>
+class _DeliveredScreenState extends State<DeliveredScreen>
     with SingleTickerProviderStateMixin {
 
   late AnimationController controller;
@@ -55,7 +55,7 @@ class _homescreenState extends State<homescreen>
           ));
     }
 
-    Details details = Details(activeButton: 0);
+    Details details = Details(activeButton: 2);
     return Scaffold(
       backgroundColor: Colors.black,
       body: Column(
@@ -78,7 +78,7 @@ class _homescreenState extends State<homescreen>
           SizedBox(
             height: 19,
           ),
-          ButtonRow(),
+          ButtonRow(index: 2,),
           SizedBox(
             height: 10,
           ),
