@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:shippoo306/components.dart';
 
-class EmployeeInfoPage extends StatelessWidget {
-  final Map<String, dynamic> employeeDetails;
+import '../models/User.dart';
 
-  EmployeeInfoPage({required this.employeeDetails});
+class ProfileScreen extends StatelessWidget {
+
+  ProfileScreen();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        title: Text('Employee Info'),
+        title: Text('Profile Page'),
       ),
       body: Center(
         child: Card(
@@ -25,7 +26,7 @@ class EmployeeInfoPage extends StatelessWidget {
                   radius: 60,
                   backgroundColor: Colors.white,
                   child: Text(
-                    '${employeeDetails['Firstname'][0]}', // Replace with the first letter of the first name
+                    '${User.currentuser.Firstname[0]}', // Replace with the first letter of the first name
                     style: TextStyle(
                       fontSize: 48,
                       fontWeight: FontWeight.bold,
@@ -34,7 +35,7 @@ class EmployeeInfoPage extends StatelessWidget {
                 ),
                 SizedBox(height: 20),
                 Text(
-                  '${employeeDetails['Firstname']} ${employeeDetails['Lastname']} ', // Replace with the user's name and surname
+                  '${User.currentuser.Firstname} ${User.currentuser.Lastname} ', // Replace with the user's name and surname
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -42,13 +43,13 @@ class EmployeeInfoPage extends StatelessWidget {
                 ),
                 SizedBox(height: 10),
                 Text(
-                  '${employeeDetails['Username']}',
+                  '${User.currentuser.Email}',
                   style: TextStyle(
                     fontSize: 18,
                   ),
                 ),
                 Text(
-                  '${employeeDetails['Phone']}', // Replace with the user's phone number
+                  '${User.currentuser.Phone}', // Replace with the user's phone number
                   style: TextStyle(
                     fontSize: 18,
                   ),

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:shippoo306/components.dart';
 
-class EmployeeInfoPage extends StatelessWidget {
+class DriverInfoPage extends StatelessWidget {
   final Map<String, dynamic> employeeDetails;
 
-  EmployeeInfoPage({required this.employeeDetails});
+  DriverInfoPage({required this.employeeDetails});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        title: Text('Employee Info'),
+        title: Text('Driver Info'),
       ),
       body: Center(
         child: Card(
@@ -42,7 +42,7 @@ class EmployeeInfoPage extends StatelessWidget {
                 ),
                 SizedBox(height: 10),
                 Text(
-                  '${employeeDetails['Username']}',
+                  'Driver ID: ${employeeDetails['DriverId']}',
                   style: TextStyle(
                     fontSize: 18,
                   ),

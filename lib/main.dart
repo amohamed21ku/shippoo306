@@ -4,7 +4,10 @@ import 'package:shippoo306/Screens/CustomerScreen.dart';
 import 'package:shippoo306/Screens/DeliveredScreen.dart';
 import 'package:shippoo306/Screens/Driverscreen.dart';
 import 'package:shippoo306/Screens/InprocessScreen.dart';
+import 'package:shippoo306/Screens/NewCustomer.dart';
 import 'package:shippoo306/Screens/OrderTrackingPage.dart';
+import 'package:shippoo306/Screens/ProfileScreen.dart';
+import 'package:shippoo306/Screens/addingDriver.dart';
 import 'package:shippoo306/Screens/homescreen.dart';
 import 'package:shippoo306/Screens/newformscreen.dart';
 import 'package:shippoo306/Screens/welcomescreen.dart';
@@ -46,6 +49,9 @@ class MyApp extends StatelessWidget {
         "InprocessScreen": (context) => InprocessScreen(),
         "deliveredscreen": (context) => DeliveredScreen(),
         "canceledscreen": (context) => CanceledScreen(),
+        "newcustomer": (context) => NewCustomer(),
+        "addingdriver": (context) => addingDriver(),
+        "profilepage": (context) => ProfileScreen(),
 
       },
       home: welcomescreen(),

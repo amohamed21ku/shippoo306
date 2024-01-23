@@ -127,8 +127,12 @@ class _InprocessScreenState extends State<InprocessScreen>
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            myiconbutton(icon: Icons.home, title: 'home',onPressed: (){} , color: Colors.white), // error is here
-            myiconbutton(icon: Icons.person, title: 'Profile' , onPressed: (){} , color: Colors.white), // and here at onPressed: () {}
+            myiconbutton(icon: Icons.home, title: 'home',onPressed: (){
+              Navigator.popAndPushNamed(context, 'menuscreen');
+            } , color: Colors.white), // error is here
+            myiconbutton(icon: Icons.person, title: 'Profile' , onPressed: (){
+              Navigator.pushNamed(context, 'profilepage');
+            } , color: Colors.white), // and here at onPressed: () {} onPressed: () {}
           ],
         ),
       ),

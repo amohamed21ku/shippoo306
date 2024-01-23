@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:shippoo306/widgets/infolist.dart';
 import 'package:shippoo306/widgets/infocard.dart';
+import '../Screens/CustomerInfoPage.dart';
+import '../Screens/DriverInfoPage.dart';
 import '../Screens/EmployeeInfoPage.dart';
 import '../models/Sqldb.dart';
 
-class ShowingOrders extends StatelessWidget {
+class ShowingdataDrivers extends StatelessWidget {
   final String sql;
-  ShowingOrders({required this.sql});
+  ShowingdataDrivers({required this.sql});
   final Sqldb sqlDB = Sqldb();
 
 
@@ -28,16 +30,16 @@ class ShowingOrders extends StatelessWidget {
           for (var emp in snapshot.data!) {
             employeeCards.add(
               infoCard(
-                name: 'From: ${emp['SenderFirstname']} ${emp['SenderLastname']}',
-                Date: 'To: ${emp['ReceiverFirstname']} ${emp['ReceiverLastname']}',
+                name: '${emp['Firstname']} ${emp['Lastname']}',
+                Date: 'Driver ID: ${emp['DriverId']}',
                 onpress: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (context) => EmployeeInfoPage(employeeDetails: emp),
-                  //   ),
-                  // );
-                },  intial: '${emp['SenderFirstname'][0]}',
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => DriverInfoPage(employeeDetails: emp),
+                    ),
+                  );
+                }, intial: '${emp['Firstname'][0]}',
 
               ),
             );

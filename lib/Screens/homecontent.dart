@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shippoo306/models/Sqldb.dart';
 
 
 class ButtonRow extends StatefulWidget {
@@ -13,6 +14,9 @@ class ButtonRow extends StatefulWidget {
 class _ButtonRowState extends State<ButtonRow> {
    int activeButtonIndex;
   _ButtonRowState({required this.activeButtonIndex});
+  Sqldb sqldb = Sqldb();
+
+
 
 
   void handleButtonTap(int index) {
@@ -109,15 +113,22 @@ class _ButtonRowState extends State<ButtonRow> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  buttonLabels[activeButtonIndex],
-                  textAlign: TextAlign.left,
-                  style: GoogleFonts.poppins(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      buttonLabels[activeButtonIndex],
+                      textAlign: TextAlign.left,
+                      style: GoogleFonts.poppins(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text('data'),
+
+                  ],
                 ),
-                Text('data'),
+
               ],
             ),
           ),

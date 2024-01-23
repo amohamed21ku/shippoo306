@@ -1,22 +1,42 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shippoo306/components.dart';
 
-class newformscreen extends StatelessWidget {
+import '../models/Sqldb.dart';
+
+class newformscreen extends StatefulWidget {
    newformscreen({super.key});
 
-  int SenderId = 0;
-  int RecieverId = 0;
+  @override
+  State<newformscreen> createState() => _newformscreenState();
+}
+
+class _newformscreenState extends State<newformscreen> {
+  late int  SenderId ;
+
+  late int RecieverId ;
+
   String SenderLoc ='';
+
   String RecieverLoc ='';
-  int DriverId = 0;
-  int VechicleId=0;
+
+  late int DriverId ;
+
+  late int VechicleId;
+
   String ShipmentDate = '';
+
   String DeliveryDate = '';
 
+  String Status = 'Canceled';
 
+   final Sqldb sqlDB = Sqldb();
 
-  @override
+   int myselc =0;
+
+   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xff242422),
@@ -61,10 +81,9 @@ class newformscreen extends StatelessWidget {
               Row(
                 children: [
                   Expanded(child: MY_textField(hint_text: "Customer ID", onchange: (value){
-                    SenderId = value;
+                    SenderId = int.parse(value);
                   }, h: 40,)),
-                  SizedBox(width: 20),
-                  // Expanded(child: MY_textField(hint_text: "Date", onchange: null,)),
+
                 ],
               ),
 
@@ -72,19 +91,17 @@ class newformscreen extends StatelessWidget {
               SizedBox(
                 height: 10,
               ),
-              Text(
-                'Location',
-                style: GoogleFonts.poppins(
-                  fontWeight: FontWeight.w300,
-                  fontSize: 16,
-                ),
-              ),
+              // Text(
+              //   'Location',
+              //   style: GoogleFonts.poppins(
+              //     fontWeight: FontWeight.w300,
+              //     fontSize: 16,
+              //   ),
+              // ),
+
+              MY_textField(hint_text: ' Location', onchange: null, h: 40,),
               SizedBox(
                 height: 10,
-              ),
-              MY_textField(hint_text: '', onchange: null, h: 100,),
-              SizedBox(
-                height: 25,
               ),
               Text(
                 'Send To',
@@ -98,52 +115,83 @@ class newformscreen extends StatelessWidget {
               ),
               Row(
                 children: [
-                  Expanded(child: MY_textField(hint_text: "Customer Id", onchange: null, h: 40,)),
+                  Expanded(child: MY_textField(hint_text: "Customer Id", onchange: (value){
+                    RecieverId = int.parse(value);
+                  }, h: 40,)),
                 ],
               ),
 
-              // Row(
-              //   children: [
-              //     Expanded(child: MY_textField(hint_text: "Email", onchange: null,)),
-              //     SizedBox(width: 20),
-              //     Expanded(child: MY_textField(hint_text: "Phone Number", onchange: null,)),
-              //   ],
-              // ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                'Location',
-                style: GoogleFonts.poppins(
-                  fontWeight: FontWeight.w300,
-                  fontSize: 16,
-                ),
-              ),
               SizedBox(
                 height: 10,
               ),
 
-              MY_textField(hint_text: "", onchange: null, h: 100,),
+              MY_textField(hint_text: "Location", onchange: null, h: 40,),
               SizedBox(height: 25,),
               Column(
                 children: [
                   Row(children: [
-                    Expanded(child: MY_textField(hint_text: "Driver Id", onchange: null, h: 40,)),
+                    Expanded(child: MY_DropdownButton(hint_text: 'Driver ID',  onChanged: (value) {  DriverId= value!;}, h: 40, sql: '''SELECT * FROM Driver WHERE Status = 'Available';''', yourColumnName: 'DriverId',)),
                     SizedBox(width: 20,),
-                    Expanded(child: MY_textField(hint_text: "Vechicle Id", onchange: null, h: 40,)),
+                    Expanded(child: MY_textField(hint_text: "Sta", h: 40,  onchange: (value) {  })),
                   ],),
                   SizedBox(height: 15,),
                   Row(children: [
-                    Expanded(child: MY_textField(hint_text: "Shipment Date", onchange: null, h: 40,)),
+                    Expanded(child: MY_textField(hint_text: "Shipment Date", onchange: (value){
+     ShipmentDate = value;}, h: 40,)),
                     SizedBox(width: 20,),
-                    Expanded(child: MY_textField(hint_text: "Delivery Date", onchange: null, h: 40,)),
+                    Expanded(child: MY_textField(hint_text: "Delivery Date", onchange: (value){
+                      DeliveryDate = value;}, h: 40,)),
                   ],)
                 ],
               ),
+              SizedBox(
+                height: 10,
+              ),
+
+              Divider(
+                color: Colors.white,
+                thickness: 2,
+                height: 30,
+              ),
+              Column(children: [
+                Text(
+                  'Cargo',
+                  style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16,
+                  ),
+                ),
+                SizedBox(height: 15,),
+                Row(children: [
+                  Expanded(child: MY_textField(hint_text: "Weight", onchange: (value){
+                    DriverId = int.parse(value);
+                  }, h: 40,)),
+                  SizedBox(width: 20,),
+                  Expanded(child: MY_textField(hint_text: "Type", onchange: (value){
+                    VechicleId = int.parse(value);}, h: 40,)),
+                ],),
+                SizedBox(height: 15,),
+
+                Row(
+                  children: [
+                   Expanded(child:MY_textField(hint_text: 'Description',  h: 50, onchange: (value) { }))
+
+                  ],
+                ),
+
+
+              ],),
+              SizedBox(height: 20,),
+
               RoundedButton2(
                 colour: Colors.yellow,
                 title: "Sumbit",
                 onPressed: () {
+                  sqlDB.insertData('''
+                  INSERT INTO Orders (SenderId, ReceiverId, DriverId, VehicleId, Status, ShipmentDate, DeliveryDate)
+                  VALUES
+                     ($SenderId, $RecieverId, $DriverId, $VechicleId, '$Status', '$ShipmentDate', '$DeliveryDate');
+                  ''');
                   Navigator.pop(context);
                   Navigator.popAndPushNamed(context, 'homescreen');
                 },
@@ -155,3 +203,4 @@ class newformscreen extends StatelessWidget {
     );
   }
 }
+

@@ -158,18 +158,6 @@ class _loginscreenState extends State<loginscreen>
                                   List<Map> response = await sqlDB.readData('''
                                    SELECT User.Username, User.Password, Employee.* FROM User JOIN Employee ON User.UserId = Employee.EmployeeId WHERE Username = '$username' and Password = '$pass';
                                  ''');
-                                  List<Map> response2 = await sqlDB.readData('''
-                                 SELECT *  FROM Employee ;
-                                 ''');
-
-                                  List<Map> response3 = await sqlDB.readData('''
-                                 SELECT *  FROM User ;
-                                 ''');
-                                  print('omk omk omk omk omk omk $response');
-                                  print('omk omk omk omk omk omk $response2');
-                                  print('omk omk omk omk omk omk $response3');
-
-
                                    bool found = false ;
                                    print('length: abdo ${response.length}');
                                     if (response.length == 1 ) {

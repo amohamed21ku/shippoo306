@@ -15,16 +15,25 @@ class _OrderTrackingPageState extends State<OrderTrackingPage> {
 
   Future<void> trackOrder() async {
     // Replace 'YOUR_DB_INSTANCE' with your actual database instance
-Sqldb sqlDB = Sqldb();
+    Sqldb sqlDB = Sqldb();
 
     // Query the Orders table for the given orderId
     List<Map<String, dynamic>> result = await sqlDB.readData(
-      "SELECT Status FROM Orders WHERE OrderId ='$orderid';"
+        '''
+      SELECT Orders.Status, Sender.Firstname AS SenderFirstName, Sender.Lastname AS SenderLastName,
+             Receiver.Firstname AS ReceiverFirstName, Receiver.Lastname AS ReceiverLastName
+      FROM Orders
+      LEFT JOIN Customer AS Sender ON Orders.SenderId = Sender.CustomerID
+      LEFT JOIN Customer AS Receiver ON Orders.ReceiverId = Receiver.CustomerID
+      WHERE OrderId ='$orderid';
+      '''
     );
 
     if (result.isNotEmpty) {
       setState(() {
-        orderStatus = 'Order Status: ${result.first['Status']}';
+        orderStatus = 'Order Status: ${result.first['Status']}\n'
+            'Sender: ${result.first['SenderFirstName']} ${result.first['SenderLastName']}\n'
+            'Receiver: ${result.first['ReceiverFirstName']} ${result.first['ReceiverLastName']}';
       });
     } else {
       setState(() {
@@ -46,11 +55,9 @@ Sqldb sqlDB = Sqldb();
           children: [
             TextField(
               onChanged: (value) {
-                orderid =int.parse(value);
-                //Do something with the user input.
+                orderid = int.parse(value);
               },
               style: GoogleFonts.poppins(color: Colors.white),
-
               controller: orderIdController,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(labelText: 'Enter Order ID'),
@@ -71,3 +78,4 @@ Sqldb sqlDB = Sqldb();
     );
   }
 }
+

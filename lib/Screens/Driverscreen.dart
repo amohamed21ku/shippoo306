@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shippoo306/components.dart';
 import 'package:shippoo306/models/Showingdata.dart';
+import 'package:shippoo306/models/ShowingdataDrivers.dart';
 
 
 import '../models/Sqldb.dart';
@@ -57,7 +58,7 @@ class _DriverscreenState extends State<Driverscreen>
                           fontWeight: FontWeight.w600
                       )),
                   Row(children: [
-                    RoundedButtonSmall(colour: Colors.yellow, title: 'Add', onPressed: (){Navigator.restorablePopAndPushNamed(context, 'addingEmployee');}, icon: Icons.add, width: 0, height: 0, iconColor: Colors.grey, textcolor: Colors.black,),
+                    RoundedButtonSmall(colour: Colors.yellow, title: 'Add', onPressed: (){Navigator.restorablePopAndPushNamed(context, 'addingdriver');}, icon: Icons.add, width: 0, height: 0, iconColor: Colors.grey, textcolor: Colors.black,),
                   ],),
                 ],
               ),
@@ -70,7 +71,7 @@ class _DriverscreenState extends State<Driverscreen>
                       borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(20),
                           topRight: Radius.circular(30))),
-                  child:ShowingData( sql: 'SELECT * FROM Driver ')
+                  child:ShowingdataDrivers( sql: 'SELECT * FROM Driver; ')
               ),
             )
           ],
