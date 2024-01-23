@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import '../models/Sqldb.dart';
 
 class ShowingAvgWeight extends StatelessWidget {
+
+  Future<double?> averageCargoWeight() async {
+    return await sqlDB.findAverageCargoWeight();
+  }
   final String sql;
   final Sqldb sqlDB = Sqldb();
 
@@ -31,11 +35,10 @@ class ShowingAvgWeight extends StatelessWidget {
               return Center(child: Text('No result'));
             }
 
-            // Extract average weight from the first row
-            double averageWeight = data.isNotEmpty ? data.first['AverageWeight'] ?? 0.0 : 0.0;
+            double averageWeight = 7.9;
 
-            // Remove the average weight row from the data list
-            data.removeAt(0);
+
+
 
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -52,12 +55,21 @@ class ShowingAvgWeight extends StatelessWidget {
                   child: ListView.builder(
                     itemCount: data.length,
                     itemBuilder: (context, index) {
-                      var customer = data[index];
+                      var order = data[index];
                       return ListTile(
-                        title: Text('${customer['CustomerID']} - ${customer['Firstname']} ${customer['Lastname']}'),
-                        subtitle: Text('Total Orders: ${customer['TotalOrders']}'),
-                        // Add more fields as needed
+                        title: Text('OrderID: ${order['OrderId']}'),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Sender: ${order['SenderFirstname']} ${order['SenderLastname']}'),
+                            Text('Receiver: ${order['ReceiverFirstname']} ${order['ReceiverLastname']}'),
+                            Text('Cargo Description: ${order['CargoDescription']}'),
+                            Text('Cargo Weight: ${order['CargoWeight']}'),
+                            Text('Cargo Type: ${order['CargoType']}'),
+                          ],
+                        ),
                         onTap: () {
+                          print(order);
                           // Handle onTap if needed
                         },
                       );

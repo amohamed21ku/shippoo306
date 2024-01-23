@@ -221,7 +221,6 @@ class _newformscreenState extends State<newformscreen> {
                   sqlDB.updateDriverStatus();
                   Navigator.pop(context);
                   Navigator.popAndPushNamed(context, 'homescreen');
-                  print("Abdo : Was pushed");
                 },
               )
             ],

@@ -156,7 +156,9 @@ class _loginscreenState extends State<loginscreen>
                                   final user = username;
 
                                   List<Map> response = await sqlDB.readData('''
-                                   SELECT User.Username, User.Password, Employee.* FROM User JOIN Employee ON User.UserId = Employee.EmployeeId WHERE Username = '$username' and Password = '$pass';
+                                   SELECT User.Username, User.Password, Employee.* 
+                                   FROM User JOIN Employee ON User.UserId = Employee.EmployeeId
+                                    WHERE Username = '$username' and Password = '$pass';
                                  ''');
                                    bool found = false ;
                                    print('length: abdo ${response.length}');

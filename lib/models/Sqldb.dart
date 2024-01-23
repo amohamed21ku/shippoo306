@@ -311,5 +311,19 @@ VALUES
     return Sqflite.firstIntValue(await readData("SELECT COUNT(*) FROM Orders WHERE Status = 'Canceled';"));
   }
 
+  Future<double?> findAverageCargoWeight() async {
+    try {
+      Database? mydb = await db;
+      List<Map<String, dynamic>> result = await mydb!.rawQuery('SELECT AVG(Weight) AS AverageWeight FROM Cargo;');
+      double? averageWeight = result.isNotEmpty ? result.first['AverageWeight'] : null;
+      return averageWeight;
+    } catch (e) {
+      print('Error finding average cargo weight: $e');
+      return null;
+    }
+  }
+
+
+
 
 }

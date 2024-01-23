@@ -36,7 +36,7 @@ class _QueryScreenState extends State<QueryScreen> {
                   MaterialPageRoute(
                     builder: (context) => ShowingAvgWeight(
                       sql: '''
-                      SELECT 
+  SELECT 
   o.OrderId,
   o.ShipmentDate,
   o.DeliveryDate,
