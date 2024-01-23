@@ -1,4 +1,3 @@
-import 'dart:html';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -7,13 +6,18 @@ import 'package:shippoo306/components.dart';
 import '../models/Sqldb.dart';
 
 class newformscreen extends StatefulWidget {
-   newformscreen({super.key});
+  newformscreen({super.key});
 
   @override
   State<newformscreen> createState() => _newformscreenState();
 }
 
 class _newformscreenState extends State<newformscreen> {
+  late double Weight;
+  late String Type;
+  late String Description;
+
+  int? selectedvalue;
   late int  SenderId ;
 
   late int RecieverId ;
@@ -22,21 +26,20 @@ class _newformscreenState extends State<newformscreen> {
 
   String RecieverLoc ='';
 
-  late int DriverId ;
+  int DriverId = 0 ;
 
-  late int VechicleId;
 
   String ShipmentDate = '';
 
   String DeliveryDate = '';
 
-  String Status = 'Canceled';
+  String Status = 'InProcess';
 
-   final Sqldb sqlDB = Sqldb();
+  final Sqldb sqlDB = Sqldb();
 
-   int myselc =0;
+  int myselc =0;
 
-   @override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xff242422),
@@ -91,15 +94,9 @@ class _newformscreenState extends State<newformscreen> {
               SizedBox(
                 height: 10,
               ),
-              // Text(
-              //   'Location',
-              //   style: GoogleFonts.poppins(
-              //     fontWeight: FontWeight.w300,
-              //     fontSize: 16,
-              //   ),
-              // ),
 
-              MY_textField(hint_text: ' Location', onchange: null, h: 40,),
+
+              MY_textField(hint_text: ' Location', onchange: (value){SenderLoc = value;}, h: 40,),
               SizedBox(
                 height: 10,
               ),
@@ -125,19 +122,40 @@ class _newformscreenState extends State<newformscreen> {
                 height: 10,
               ),
 
-              MY_textField(hint_text: "Location", onchange: null, h: 40,),
+              MY_textField(hint_text: "Location", onchange: (value){RecieverLoc = value;}, h: 40,),
               SizedBox(height: 25,),
               Column(
                 children: [
                   Row(children: [
-                    Expanded(child: MY_DropdownButton(hint_text: 'Driver ID',  onChanged: (value) {  DriverId= value!;}, h: 40, sql: '''SELECT * FROM Driver WHERE Status = 'Available';''', yourColumnName: 'DriverId',)),
+                    Expanded(child: MY_DropdownButton(hint_text: 'Driver ID',  onChanged: (value) {  setState(() {
+                      selectedvalue = value;
+                      DriverId = value??0;
+
+                    });print(DriverId);}, h: 40, sql: '''SELECT * FROM Driver WHERE Status = 'Available';''', yourColumnName: 'DriverId',selectedValue: selectedvalue,)),
                     SizedBox(width: 20,),
-                    Expanded(child: MY_textField(hint_text: "Sta", h: 40,  onchange: (value) {  })),
+                    Expanded(
+                      child: DropdownButton(
+                        hint: Text('Status'),
+                        value: Status,
+                        items: ['InProcess', 'Delivered', 'Canceled'].map((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                        onChanged: (String? value) {
+                          setState(() {
+                            Status = value?? '';
+
+                          });
+                        },
+                      ),
+                    )
                   ],),
                   SizedBox(height: 15,),
                   Row(children: [
                     Expanded(child: MY_textField(hint_text: "Shipment Date", onchange: (value){
-     ShipmentDate = value;}, h: 40,)),
+                      ShipmentDate = value;}, h: 40,)),
                     SizedBox(width: 20,),
                     Expanded(child: MY_textField(hint_text: "Delivery Date", onchange: (value){
                       DeliveryDate = value;}, h: 40,)),
@@ -164,17 +182,18 @@ class _newformscreenState extends State<newformscreen> {
                 SizedBox(height: 15,),
                 Row(children: [
                   Expanded(child: MY_textField(hint_text: "Weight", onchange: (value){
-                    DriverId = int.parse(value);
+                    Weight = double.parse(value);
                   }, h: 40,)),
                   SizedBox(width: 20,),
                   Expanded(child: MY_textField(hint_text: "Type", onchange: (value){
-                    VechicleId = int.parse(value);}, h: 40,)),
+                    Type = value;
+                    }, h: 40,)),
                 ],),
                 SizedBox(height: 15,),
 
                 Row(
                   children: [
-                   Expanded(child:MY_textField(hint_text: 'Description',  h: 50, onchange: (value) { }))
+                    Expanded(child:MY_textField(hint_text: 'Description',  h: 50, onchange: (value) { Description = value;}))
 
                   ],
                 ),
@@ -188,12 +207,21 @@ class _newformscreenState extends State<newformscreen> {
                 title: "Sumbit",
                 onPressed: () {
                   sqlDB.insertData('''
-                  INSERT INTO Orders (SenderId, ReceiverId, DriverId, VehicleId, Status, ShipmentDate, DeliveryDate)
+            INSERT INTO Orders (SenderId, SenderLoc, ReceiverId, ReceiverLoc, DriverId, Status, ShipmentDate, DeliveryDate)
                   VALUES
-                     ($SenderId, $RecieverId, $DriverId, $VechicleId, '$Status', '$ShipmentDate', '$DeliveryDate');
+                     ($SenderId, '$SenderLoc',$RecieverId,'$RecieverLoc', $DriverId, '$Status', '$ShipmentDate', '$DeliveryDate');
                   ''');
+
+            //
+                  sqlDB.insertData('''
+            INSERT INTO Cargo (Description, Weight, Type)
+                  VALUES
+                     ($Description, $Weight,$Type);
+                  ''');
+                  sqlDB.updateDriverStatus();
                   Navigator.pop(context);
                   Navigator.popAndPushNamed(context, 'homescreen');
+                  print("Abdo : Was pushed");
                 },
               )
             ],
@@ -203,4 +231,3 @@ class _newformscreenState extends State<newformscreen> {
     );
   }
 }
-

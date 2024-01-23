@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shippoo306/widgets/infolist.dart';
 import 'package:shippoo306/widgets/infocard.dart';
-import '../Screens/EmployeeInfoPage.dart';
+import '../Screens/OrderInfoPage.dart';
 import '../models/Sqldb.dart';
 
 class ShowingOrders extends StatelessWidget {
@@ -20,7 +20,7 @@ class ShowingOrders extends StatelessWidget {
       future: empInfo(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
+          return Container(child: Center(child: CircularProgressIndicator()));
         } else if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
         } else {
@@ -31,13 +31,14 @@ class ShowingOrders extends StatelessWidget {
                 name: 'From: ${emp['SenderFirstname']} ${emp['SenderLastname']}',
                 Date: 'To: ${emp['ReceiverFirstname']} ${emp['ReceiverLastname']}',
                 onpress: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (context) => EmployeeInfoPage(employeeDetails: emp),
-                  //   ),
-                  // );
-                },  intial: '${emp['SenderFirstname'][0]}',
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => OrderInfoPage(orderDetails: emp),
+                    ),
+                  );
+                }
+                ,  intial: '${emp['SenderFirstname'][0]}',
 
               ),
             );

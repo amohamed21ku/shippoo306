@@ -9,6 +9,10 @@ class Details{
     SELECT 
   o.ShipmentDate,
   o.DeliveryDate,
+  o.SenderLoc,
+  o.ReceiverLoc,
+  o.DriverId,
+  o.Status,
   sender.Firstname AS SenderFirstname,
   sender.Lastname AS SenderLastname,
   receiver.Firstname AS ReceiverFirstname,
@@ -24,6 +28,10 @@ JOIN
     SELECT 
   o.ShipmentDate,
   o.DeliveryDate,
+  o.SenderLoc,
+  o.ReceiverLoc,
+  o.DriverId,
+  o.Status,
   sender.Firstname AS SenderFirstname,
   sender.Lastname AS SenderLastname,
   receiver.Firstname AS ReceiverFirstname,
@@ -41,6 +49,10 @@ WHERE
     SELECT 
   o.ShipmentDate,
   o.DeliveryDate,
+  o.SenderLoc,
+  o.ReceiverLoc,
+  o.DriverId,
+  o.Status,
   sender.Firstname AS SenderFirstname,
   sender.Lastname AS SenderLastname,
   receiver.Firstname AS ReceiverFirstname,
@@ -59,6 +71,10 @@ WHERE
     SELECT 
   o.ShipmentDate,
   o.DeliveryDate,
+  o.SenderLoc,
+  o.ReceiverLoc,
+  o.DriverId,
+  o.Status,
   sender.Firstname AS SenderFirstname,
   sender.Lastname AS SenderLastname,
   receiver.Firstname AS ReceiverFirstname,

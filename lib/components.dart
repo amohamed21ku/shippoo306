@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shippoo306/Screens/newformscreen.dart';
 import 'package:shippoo306/models/Sqldb.dart';
 
 class RoundedButton extends StatelessWidget {
@@ -271,13 +272,32 @@ class RoundedButtonSmall extends StatelessWidget {
 
 
 //=====================================================================
-
-class MY_DropdownButton extends StatelessWidget {
+//
+class MY_DropdownButton extends StatefulWidget {
   final String yourColumnName;
   final String hint_text;
   final ValueChanged<int?> onChanged;
   final double h;
   final String sql;
+   int? selectedValue;
+
+
+
+  MY_DropdownButton({
+    required this.hint_text,
+    required this.onChanged,
+    required this.h,
+    required this.sql,
+    required this.yourColumnName, this.selectedValue,
+  });
+
+  @override
+  State<MY_DropdownButton> createState() => _MY_DropdownButtonState();
+}
+
+class _MY_DropdownButtonState extends State<MY_DropdownButton> {
+   // int? selectedValue;
+
 
   Sqldb sqldb = Sqldb();
 
@@ -287,10 +307,10 @@ class MY_DropdownButton extends StatelessWidget {
 
     try {
       // Use await to get the result of the asynchronous operation
-      List<Map<String, dynamic>> result = await sqldb.readData(sql);
+      List<Map<String, dynamic>> result = await sqldb.readData(widget.sql);
 
       // Extract the integer values from the result and add them to the list
-      resultList = result.map((item) => item[yourColumnName] as int).toList();
+      resultList = result.map((item) => item[widget.yourColumnName] as int).toList();
     } catch (e) {
       // Handle exceptions if needed
       print('Error fetching data: $e');
@@ -300,19 +320,11 @@ class MY_DropdownButton extends StatelessWidget {
     return resultList;
   }
 
-  MY_DropdownButton({
-    required this.hint_text,
-    required this.onChanged,
-    required this.h,
-    required this.sql,
-    required this.yourColumnName,
-  });
-
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: h,
+      height: widget.h,
       decoration: BoxDecoration(
         color: Color(0xff4E4B4A),
         borderRadius: BorderRadius.circular(10),
@@ -320,17 +332,17 @@ class MY_DropdownButton extends StatelessWidget {
       child: FutureBuilder<List<int>>(
         future: listy(),
         builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            // Return a loading indicator or placeholder while waiting for the data
-            return CircularProgressIndicator();
-          } else if (snapshot.hasError) {
+          // if (snapshot.connectionState == ConnectionState.waiting) {
+          //   // Return a loading indicator or placeholder while waiting for the data
+          //   return CircularProgressIndicator();
+           if (snapshot.hasError) {
             // Handle error case
             return Text('Error fetching data: ${snapshot.error}');
           } else {
             // Data is available, use it to build your DropdownButton
             return DropdownButton<int>(
-              value: null, // You may need to manage the selected value using state
-              onChanged: onChanged,
+              value: widget.selectedValue, // You may need to manage the selected value using state
+              onChanged: widget.onChanged,
               items: snapshot.data!.map<DropdownMenuItem<int>>((int value) {
                 return DropdownMenuItem<int>(
                   value: value,
@@ -347,7 +359,7 @@ class MY_DropdownButton extends StatelessWidget {
               style: TextStyle(color: Colors.white),
               hint: Center(
                 child: Text(
-                  '    $hint_text',
+                  '    ${widget.hint_text}',
                   style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
                 ),
               ),
@@ -357,4 +369,5 @@ class MY_DropdownButton extends StatelessWidget {
       ),
     );
   }
+
 }

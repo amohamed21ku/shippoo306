@@ -64,8 +64,11 @@ class _OrderTrackingPageState extends State<OrderTrackingPage> {
             ),
             SizedBox(height: 20),
             ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(Colors.yellow),
+              ),
               onPressed: trackOrder,
-              child: Text('Search'),
+              child: Text('Search',style: GoogleFonts.poppins(color: Colors.black)),
             ),
             SizedBox(height: 20),
             Text(

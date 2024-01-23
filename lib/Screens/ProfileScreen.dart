@@ -59,7 +59,8 @@ class ProfileScreen extends StatelessWidget {
                   onPressed: () {
                     // Implement your logout logic here
                     // For simplicity, we'll just navigate back to the previous screen
-                    Navigator.pushNamed(context, "login_screen");
+
+                    Navigator.popAndPushNamed(context, "loginscreen");
                   },
                   colour: Colors.yellow,
                   title: 'Logout',

@@ -81,7 +81,9 @@ class menuscreen extends StatelessWidget {
 Expanded(
   child: Column(
     children: [
-      RoundedButtonSmall(colour: Colors.yellow, title: 'Track Order', onPressed: () { Navigator.pushNamed(context, 'ordertrackingpage'); }, width: 0, height: 50,icon: Icons.add_box, iconColor: Colors.grey, textcolor: Colors.black,),
+      RoundedButtonSmall(colour: Colors.yellow, title: 'Track Order', onPressed: () { Navigator.pushNamed(context, 'ordertrackingpage'); }, width: 0, height: 50,icon: Icons.numbers, iconColor: Colors.grey, textcolor: Colors.black,),
+      RoundedButtonSmall(colour: Colors.yellow, title: 'Advanced Search', onPressed: () { Navigator.pushNamed(context, 'advancedsearch'); }, width: 0, height: 50,icon: Icons.search, iconColor: Colors.grey, textcolor: Colors.black,),
+      RoundedButtonSmall(colour: Colors.yellow, title: 'Random Data', onPressed: () { Navigator.pushNamed(context, 'queryscreen'); }, width: 0, height: 50,icon: Icons.book, iconColor: Colors.grey, textcolor: Colors.black,),
 
 
 

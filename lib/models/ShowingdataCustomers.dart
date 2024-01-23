@@ -21,7 +21,7 @@ class ShowingDataCustomer extends StatelessWidget {
       future: empInfo(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
+          return Container(child: Center(child: CircularProgressIndicator()));
         } else if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
         } else {

@@ -1,17 +1,17 @@
-
 import 'package:flutter/material.dart';
 import 'package:shippoo306/components.dart';
 
-class EmployeeInfoPage extends StatelessWidget {
-  final Map<String, dynamic> employeeDetails;
+class OrderInfoPage extends StatelessWidget {
+  final Map<String, dynamic> orderDetails;
 
-  EmployeeInfoPage({required this.employeeDetails});
+  OrderInfoPage({required this.orderDetails});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        title: Text('Employee Info'),
+        title: Text('Order Information'),
       ),
       body: Center(
         child: Card(
@@ -21,12 +21,13 @@ class EmployeeInfoPage extends StatelessWidget {
             padding: const EdgeInsets.all(16.0),
             child: Column(
               mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 CircleAvatar(
                   radius: 60,
                   backgroundColor: Colors.white,
                   child: Text(
-                    '${employeeDetails['Firstname'][0]}', // Replace with the first letter of the first name
+                    '${orderDetails['SenderFirstname'][0]}',
                     style: TextStyle(
                       fontSize: 48,
                       fontWeight: FontWeight.bold,
@@ -35,22 +36,28 @@ class EmployeeInfoPage extends StatelessWidget {
                 ),
                 SizedBox(height: 20),
                 Text(
-                  '${employeeDetails['Firstname']} ${employeeDetails['Lastname']} ', // Replace with the user's name and surname
+                  'Sender: ${orderDetails['SenderFirstname']} ${orderDetails['SenderLastname']}',
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 SizedBox(height: 10),
-                Text('${employeeDetails['Position']}',style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600),),
                 Text(
-                  '${employeeDetails['Username']}',
+                  'Receiver: ${orderDetails['ReceiverFirstname']} ${orderDetails['ReceiverLastname']}',
+                  style: TextStyle(
+                    fontSize: 18,
+                  ),
+                ),
+                SizedBox(height: 10),
+                Text(
+                  'From: ${orderDetails['SenderLoc']}',
                   style: TextStyle(
                     fontSize: 18,
                   ),
                 ),
                 Text(
-                  '${employeeDetails['Phone']}', // Replace with the user's phone number
+                  'To: ${orderDetails['ReceiverLoc']}',
                   style: TextStyle(
                     fontSize: 18,
                   ),
@@ -60,10 +67,10 @@ class EmployeeInfoPage extends StatelessWidget {
                   onPressed: () {
                     // Implement your logout logic here
                     // For simplicity, we'll just navigate back to the previous screen
-                    Navigator.pushNamed(context, "login_screen");
+                    Navigator.pop(context);
                   },
                   colour: Colors.yellow,
-                  title: 'Logout',
+                  title: 'Back',
                 ),
               ],
             ),

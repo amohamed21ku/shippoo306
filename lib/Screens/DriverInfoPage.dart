@@ -1,10 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:shippoo306/components.dart';
+import 'package:shippoo306/models/Sqldb.dart';
 
 class DriverInfoPage extends StatelessWidget {
+  final Sqldb sqldb = Sqldb();
   final Map<String, dynamic> employeeDetails;
 
   DriverInfoPage({required this.employeeDetails});
+
+  Future<List<Map>> getOrdersByDriverId(int driverId) async {
+    String sql = 'SELECT * FROM Orders WHERE DriverId = $driverId';
+    return await sqldb.readData(sql);
+  }
+
+ Future<int> getcount(int driverId) async {
+    String sql = 'SELECT count(*) FROM Orders WHERE DriverId = $driverId';
+    return await sqldb.readData(sql);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +38,7 @@ class DriverInfoPage extends StatelessWidget {
                   radius: 60,
                   backgroundColor: Colors.white,
                   child: Text(
-                    '${employeeDetails['Firstname'][0]}', // Replace with the first letter of the first name
+                    '${employeeDetails['Firstname'][0]}',
                     style: TextStyle(
                       fontSize: 48,
                       fontWeight: FontWeight.bold,
@@ -34,7 +47,7 @@ class DriverInfoPage extends StatelessWidget {
                 ),
                 SizedBox(height: 20),
                 Text(
-                  '${employeeDetails['Firstname']} ${employeeDetails['Lastname']} ', // Replace with the user's name and surname
+                  '${employeeDetails['Firstname']} ${employeeDetails['Lastname']} ',
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -48,20 +61,52 @@ class DriverInfoPage extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '${employeeDetails['Phone']}', // Replace with the user's phone number
+                  '${employeeDetails['Phone']}',
                   style: TextStyle(
                     fontSize: 18,
                   ),
+                ),
+                SizedBox(height: 20),
+                Text(
+                  'Orders:',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                FutureBuilder<List<Map>>(
+                  future: getOrdersByDriverId(employeeDetails['DriverId']),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return CircularProgressIndicator();
+                    } else if (snapshot.hasError) {
+                      return Text('Error fetching order data: ${snapshot.error}');
+                    } else {
+                      List<Map> orders = snapshot.data ?? [];
+                      return Expanded(
+                        child: ListView.builder(
+                          itemCount: orders.length,
+                          itemBuilder: (context, index) {
+                            return ListTile(
+                              title: Text('OrderID: ${orders[index]['OrderId']}'),
+                              subtitle: Text(
+                                  'From: ${orders[index]['SenderLoc']}\nTo: ${orders[index]['ReceiverLoc']}\nStatus: ${orders[index]['Status']}'),
+                            );
+                          },
+                        ),
+                      );
+                    }
+                  },
                 ),
                 SizedBox(height: 20),
                 RoundedButton2(
                   onPressed: () {
                     // Implement your logout logic here
                     // For simplicity, we'll just navigate back to the previous screen
-                    Navigator.pushNamed(context, "login_screen");
+                    Navigator.pop(context);
                   },
                   colour: Colors.yellow,
-                  title: 'Logout',
+                  title: 'Back',
                 ),
               ],
             ),

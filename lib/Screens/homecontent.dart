@@ -124,7 +124,6 @@ class _ButtonRowState extends State<ButtonRow> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Text('data'),
 
                   ],
                 ),

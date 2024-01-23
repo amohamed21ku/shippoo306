@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shippoo306/components.dart';
-import 'package:shippoo306/models/Showingdata.dart';
 
 
 import '../models/ShowingdataCustomers.dart';

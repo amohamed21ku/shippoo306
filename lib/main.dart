@@ -7,7 +7,9 @@ import 'package:shippoo306/Screens/InprocessScreen.dart';
 import 'package:shippoo306/Screens/NewCustomer.dart';
 import 'package:shippoo306/Screens/OrderTrackingPage.dart';
 import 'package:shippoo306/Screens/ProfileScreen.dart';
+import 'package:shippoo306/Screens/QueryScreen.dart';
 import 'package:shippoo306/Screens/addingDriver.dart';
+import 'package:shippoo306/Screens/advancedSearch.dart';
 import 'package:shippoo306/Screens/homescreen.dart';
 import 'package:shippoo306/Screens/newformscreen.dart';
 import 'package:shippoo306/Screens/welcomescreen.dart';
@@ -52,6 +54,8 @@ class MyApp extends StatelessWidget {
         "newcustomer": (context) => NewCustomer(),
         "addingdriver": (context) => addingDriver(),
         "profilepage": (context) => ProfileScreen(),
+        "advancedsearch": (context) => advancedSearch(),
+        "queryscreen": (context) => QueryScreen(),
 
       },
       home: welcomescreen(),

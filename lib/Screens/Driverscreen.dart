@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shippoo306/components.dart';
-import 'package:shippoo306/models/Showingdata.dart';
 import 'package:shippoo306/models/ShowingdataDrivers.dart';
 
 
@@ -71,7 +70,7 @@ class _DriverscreenState extends State<Driverscreen>
                       borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(20),
                           topRight: Radius.circular(30))),
-                  child:ShowingdataDrivers( sql: 'SELECT * FROM Driver; ')
+                  child:ShowingdataDrivers( sql: 'SELECT * FROM Driver ')
               ),
             )
           ],

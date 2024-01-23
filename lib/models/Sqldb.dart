@@ -93,12 +93,13 @@ CREATE TABLE Driver (
 
     await db.execute('''
 CREATE TABLE Cargo (
-    CargoId INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-    OrderId INTEGER REFERENCES Orders(OrderId),
+    OrderId INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     Description VARCHAR(255),
     Weight DECIMAL(10, 2),
-    Type VARCHAR(255)
+    Type VARCHAR(255),
+    FOREIGN KEY (OrderId) REFERENCES Orders(OrderId)
 );
+
     ''');
 
 
@@ -212,28 +213,28 @@ VALUES
     ''');
 
     await db.execute('''
-  INSERT INTO Cargo (OrderId,Description, Weight, Type)
+  INSERT INTO Cargo (Description, Weight, Type)
   VALUES
-    ( 1,'Electronics', 10.5, 'Fragile'),
-    (2,'Clothing', 5.2, 'Apparel'),
-    (3, 'Books', 8.0, 'Printed Material'),
-    (4, 'Furniture', 15.7, 'Furniture'),
-    (5, 'Toys', 3.3, 'Toys'),
-    ( 6,'Electrical Appliances', 12.0, 'Appliances'),
-    ( 7,'Sports Equipment', 7.8, 'Sports'),
-    ( 8,'Perishables', 4.5, 'Food'),
-    ( 9,'Artwork', 9.2, 'Art'),
-    ( 10,'Tools', 6.1, 'Hardware'),
-    ( 11,'Gadgets', 11.5, 'Electronics'),
-    (12, 'Jewelry', 2.0, 'Precious Items'),
-    ( 13,'Stationery', 8.7, 'Office Supplies'),
-    ( 14,'Baby Products', 5.9, 'Baby Care'),
-    ( 15,'Musical Instruments', 13.4, 'Music'),
-    ( 16,'Home Decor', 7.0, 'Decor'),
-    ( 17,'Medical Supplies', 4.8, 'Healthcare'),
-    ( 18,'Outdoor Gear', 10.3, 'Outdoor'),
-    ( 19,'Automotive Parts', 6.5, 'Automotive'),
-    ( 20,'Pet Supplies', 3.7, 'Pet Care');
+    ( 'Electronics', 10.5, 'Fragile'),
+    ('Clothing', 5.2, 'Apparel'),
+    ( 'Books', 8.0, 'Printed Material'),
+    ( 'Furniture', 15.7, 'Furniture'),
+    ( 'Toys', 3.3, 'Toys'),
+    ( 'Electrical Appliances', 12.0, 'Appliances'),
+    ( 'Sports Equipment', 7.8, 'Sports'),
+    ( 'Perishables', 4.5, 'Food'),
+    ( 'Artwork', 9.2, 'Art'),
+    ( 'Tools', 6.1, 'Hardware'),
+    ( 'Gadgets', 11.5, 'Electronics'),
+    ( 'Jewelry', 2.0, 'Precious Items'),
+    ( 'Stationery', 8.7, 'Office Supplies'),
+    ( 'Baby Products', 5.9, 'Baby Care'),
+    ( 'Musical Instruments', 13.4, 'Music'),
+    ( 'Home Decor', 7.0, 'Decor'),
+    ( 'Medical Supplies', 4.8, 'Healthcare'),
+    ( 'Outdoor Gear', 10.3, 'Outdoor'),
+    ( 'Automotive Parts', 6.5, 'Automotive'),
+    ( 'Pet Supplies', 3.7, 'Pet Care');
 ''');
 
 
@@ -272,8 +273,43 @@ VALUES
     Database? mydb = await db;
     return Sqflite.firstIntValue(await readData('SELECT COUNT(*) FROM Orders;'));
   }
-  int getTotalOrders(){
-    return getTotalOrders();
+
+  Future<void> updateDriverStatus() async {
+    String sql = '''
+    UPDATE Driver
+    SET Status = 'Unavailable'
+    WHERE DriverId IN (
+      SELECT DriverId
+      FROM Orders
+      WHERE Status = 'InProcess'
+      GROUP BY DriverId
+      HAVING COUNT(DISTINCT OrderId) >= 2
+    );
+  ''';
+
+    int result = await updateData(sql);
+
+    if (result > 0) {
+      print('Driver status updated successfully.');
+    } else {
+      print('Error updating driver status.');
+    }
   }
+
+  Future<int?> countInProcessOrders() async {
+    Database? mydb = await db;
+    return Sqflite.firstIntValue(await readData("SELECT COUNT(*) FROM Orders WHERE Status = 'InProcess';"));
+  }
+
+  Future<int?> countDeliveredOrders() async {
+    Database? mydb = await db;
+    return Sqflite.firstIntValue(await readData("SELECT COUNT(*) FROM Orders WHERE Status = 'Delivered';"));
+  }
+
+  Future<int?> countCanceledOrders() async {
+    Database? mydb = await db;
+    return Sqflite.firstIntValue(await readData("SELECT COUNT(*) FROM Orders WHERE Status = 'Canceled';"));
+  }
+
 
 }
